@@ -1,0 +1,6 @@
+{
+  "name": "APK Builder Pro",
+  "description": "Herramienta web para configurar y preparar proyectos web (React, Node, Python) para su conversión a aplicaciones móviles Android.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
