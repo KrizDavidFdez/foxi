@@ -207,7 +207,11 @@ export default function App() {
                       />
                       <div 
                         onClick={() => iconInputRef.current?.click()}
-                        className="w-20 h-20 bg-[#1A1A1E] border-2 border-dashed border-white/10 rounded-2xl flex items-center justify-center cursor-pointer hover:border-indigo-500 transition-colors group overflow-hidden relative"
+                        onKeyDown={(e) => e.key === 'Enter' && iconInputRef.current?.click()}
+                        tabIndex={0}
+                        role="button"
+                        aria-label="Upload App Icon"
+                        className="w-20 h-20 bg-[#1A1A1E] border-2 border-dashed border-white/10 rounded-2xl flex items-center justify-center cursor-pointer hover:border-indigo-500 transition-all group overflow-hidden relative active:scale-95"
                       >
                         {iconFile ? (
                           <img 
