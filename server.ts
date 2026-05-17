@@ -20,17 +20,17 @@ const storage = multer.diskStorage({
 
 const upload = multer({ 
   storage,
-  limits: { fileSize: 200 * 1024 * 1024 } // 50MB limit
+  limits: { fileSize: 50 * 1024 * 1024 } // 50MB limit
 });
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
   app.use(express.json());
 
   // API Routes
-  app.post("/api/upload", upload.fields([{ name: 'project', maxCount: 1 }, { name: 'icon', maxCount: 1 }]), (req: express.Request & { files?: { [fieldname: string]: Express.Multer.File[] } }, res) => {
+  app.post("/api/upload", upload.fields([{ name: 'project', maxCount: 1 }, { name: 'icon', maxCount: 1 }]), (req: any, res) => {
     const files = req.files;
     
     if (!files || !files['project']) {
@@ -61,11 +61,11 @@ async function startServer() {
     res.json({
       status: "started",
       steps: [
-        `Detectando entorno: ${environment}...`,
+        `Detectando entorno: ${environment || 'React'}...`,
         "Cargando dependencias del sistema Koyeb...",
         "Validando integridad del archivo ZIP...",
         `Procesando Icono de Aplicación: ${iconFilename || 'Default Android Icon'}`,
-        `Generando AndroidManifest.xml con package=${packageName}`,
+        `Generando AndroidManifest.xml con package=${packageName || 'com.example.app'}`,
         "Inyectando assets de la aplicación...",
         "Ejecutando Capacitor/Gradle Build sync...",
         "Optimizando recursos (Proguard/R8)...",
@@ -91,8 +91,8 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  app.listen(Number(PORT), "0.0.0.0", () => {
+    console.log(`Server running on http://0.0.0.0:${PORT}`);
   });
 }
 
